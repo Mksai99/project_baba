@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Student Auth</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <p>Manage student data & view stats</p>
+        </header>
+
+        <!-- Stats Overview -->
+        <div class="card">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span>Total Students</span>
+                    <strong id="stat-total">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Scanned</span>
+                    <strong id="stat-scanned">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Remaining</span>
+                    <strong id="stat-remaining">0</strong>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px;">
+                <button id="btn-refresh" style="flex: 1; font-size: 14px; padding: 10px;">Refresh Stats</button>
+                <a href="/export" style="flex: 1; text-decoration: none; display: block;">
+                    <button style="width: 100%; font-size: 14px; padding: 10px; background-color: var(--success);">Export Scanned</button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Excel Upload -->
+        <div class="card">
+            <h3 style="margin-bottom: 15px;">Import Students</h3>
+            <div class="upload-section">
+                <input type="file" id="file-input" accept=".xlsx">
+                <label for="file-input" class="file-label" id="file-label">
+                    Click to select Excel (.xlsx)
+                </label>
+                <div id="file-name" style="margin-top: 10px; font-size: 12px; color: var(--text-muted);"></div>
+            </div>
+            <button id="btn-upload" style="width: 100%;">Upload & Import</button>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card">
+            <h3 style="margin-bottom: 15px;">Recent Activity</h3>
+            <div id="recent-activity" class="recent-list">
+                <!-- Activity items will be loaded here -->
+            </div>
+        </div>
+
+        <nav>
+            <a href="/">&larr; Back to Scanner</a>
+        </nav>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileLabel = document.getElementById('file-label');
+        const fileNameDisp = document.getElementById('file-name');
+        const uploadBtn = document.getElementById('btn-upload');
+        const refreshBtn = document.getElementById('btn-refresh');
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileNameDisp.innerText = `Selected: ${fileInput.files[0].name}`;
+            }
+        });
+
+        async function updateStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                document.getElementById('stat-total').innerText = data.total;
+                document.getElementById('stat-scanned').innerText = data.scanned;
+                document.getElementById('stat-remaining').innerText = data.remaining;
+                
+                const list = document.getElementById('recent-activity');
+                list.innerHTML = '';
+                
+                if (data.recent.length === 0) {
+                    list.innerHTML = '<div style="text-align: center; color: var(--text-muted);">No recent scans</div>';
+                } else {
+                    data.recent.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'recent-item';
+                        div.innerHTML = `
+                            <span class="recent-roll">${item.roll_number}</span>
+                            <span class="recent-time">${item.scanned_at}</span>
+                        `;
+                        list.appendChild(div);
+                    });
+                }
+            } catch (err) {
+                console.error('Failed to load stats:', err);
+            }
+        }
+
+        uploadBtn.addEventListener('click', async () => {
+            if (fileInput.files.length === 0) {
+                alert('Please select a file first.');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            
+            uploadBtn.innerText = 'Uploading...';
+            uploadBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                alert(result.message);
+                updateStats();
+            } catch (err) {
+                alert('Upload failed.');
+            } finally {
+                uploadBtn.innerText = 'Upload & Import';
+                uploadBtn.disabled = false;
+                fileInput.value = '';
+                fileNameDisp.innerText = '';
+            }
+        });
+
+        refreshBtn.addEventListener('click', updateStats);
+        window.addEventListener('DOMContentLoaded', updateStats);
+    </script>
+</body>
+</html>

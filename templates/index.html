@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Student Authentication System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Student Verification</h1>
+            <p>Scan QR/Barcode or manual entry</p>
+        </header>
+
+        <div class="card">
+            <div id="reader"></div>
+            <div id="scanner-instruction" style="text-align: center; color: var(--text-muted); font-size: 14px; margin-top: -10px; margin-bottom: 20px;">
+                Focus camera on QR/Barcode
+            </div>
+            
+            <div class="manual-entry">
+                <div class="input-group">
+                    <label for="roll_number">Manual Roll Number Entry</label>
+                    <input type="text" id="roll_number" placeholder="Enter roll number..." autocomplete="off">
+                </div>
+                <button id="btn-verify">Verify Student</button>
+            </div>
+        </div>
+
+        <nav>
+            <a href="/admin">Admin Dashboard &rarr;</a>
+        </nav>
+    </div>
+
+    <!-- Result Overlay -->
+    <div class="overlay-backdrop"></div>
+    <div id="result-overlay">
+        <div class="status-icon"></div>
+        <div class="status-msg"></div>
+        <div class="status-roll-number" style="color: rgba(255,255,255,0.8); margin-top: 5px; font-size: 14px;"></div>
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="/static/js/scanner.js"></script>
+</body>
+</html>

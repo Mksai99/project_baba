@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login - Student Auth</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .login-card {
+            max-width: 400px;
+            margin: 100px auto;
+        }
+        .error-msg {
+            color: var(--danger);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card login-card">
+            <header>
+                <h1>Secure Login</h1>
+                <p>Restricted Access - 1 User Session Only</p>
+            </header>
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="error-msg">{{ messages[0] }}</div>
+              {% endif %}
+            {% endwith %}
+
+            <form action="/login" method="POST" class="manual-entry">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" required placeholder="Enter username">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required placeholder="Enter password" style="width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: var(--radius); outline: none;">
+                </div>
+                <button type="submit">Login to System</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
