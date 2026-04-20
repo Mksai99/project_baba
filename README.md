@@ -5,7 +5,7 @@
 [![Flask Backend](https://img.shields.io/badge/Backend-Flask-lightgrey?style=for-the-badge&logo=flask)](https://flask.palletsprojects.com/)
 
 > [!NOTE]
-> **Project Baba** is a high-performance, cloud-native attendance management system designed to streamline event check-ins and student verifications using real-time QR scanning and cloud synchronization.
+> **Secure Attendance & QR Verification System** is a high-performance, cloud-native attendance management system designed to streamline event check-ins and student verifications using real-time QR scanning and cloud synchronization.
 
 ---
 
@@ -15,7 +15,7 @@
 Organizing large-scale events or daily student check-ins often suffers from manual entry errors, slow processing times, and the lack of real-time data synchronization. Traditional systems often fail to prevent "buddy punching" or duplicate entries, leading to data integrity issues.
 
 ### 💡 The Solution
-**Project Baba** provides a seamless, automated solution. By leveraging client-side QR scanning and a Supabase-backed real-time database, it ensures that every entry is unique, verified, and logged instantly. The system features a robust admin dashboard for monitoring live stats, managing student records via Excel, and exporting verified data for administrative audits.
+**Secure Attendance & QR Verification System** provides a seamless, automated solution. By leveraging client-side QR scanning and a Supabase-backed real-time database, it ensures that every entry is unique, verified, and logged instantly. The system features a robust admin dashboard for monitoring live stats, managing student records via Excel, and exporting verified data for administrative audits.
 
 ---
 
@@ -71,8 +71,8 @@ Follow these steps to get your local development environment running:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/project-baba.git
-cd project-baba
+git clone https://github.com/your-username/secure-attendance-qr.git
+cd secure-attendance-qr
 ```
 
 ### 2. Set Up Virtual Environment
@@ -209,8 +209,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## 👤 Author / Contact
 
 **Krishna Sai** - [@mksai99](https://github.com/mksai99)
-- Project Link: [https://github.com/mksai99/project-baba](https://github.com/mksai99/project-baba)
+- Project Link: [https://github.com/mksai99/secure-attendance-qr](https://github.com/mksai99/secure-attendance-qr)
 - Email: [mksai99@example.com](mailto:mksai99@example.com)
 
 ---
-*Generated with ❤️ by Project Baba Team*
+*Generated with ❤️ by Secure Attendance Team*
